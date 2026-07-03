@@ -1,9 +1,7 @@
-from flask import Flask
+from app import app
 
-app = Flask(__name__)
-
-@app.route("/")
-def hello():
-    return "Hello Kubernetes!"
-
-app.run(host="0.0.0.0", port=5000)
+def test_home():
+    client = app.test_client()
+    response = client.get("/")
+    assert response.status_code == 200
+    assert b"Hello CI/CD" in response.data
